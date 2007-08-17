@@ -1,0 +1,6 @@
+useDynLib(rgcvpack)
+
+export(fitTps, predict.Tps)
+
+S3method(predict, Tps)
+S3method(print, Tps)
