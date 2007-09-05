@@ -42,6 +42,7 @@ c
       double precision dummy(1)
 c
 c
+      nlamht = 0.0d+0
       np1 = nobs + 1
       nmh = nobs - nnull
 c			form the response vector

@@ -76,7 +76,7 @@ c
       info = 0
       one = 1.0d0
       machpr = 1.0d0
-   10 machpr = machpr/2.0d0
+ 10   machpr = machpr/2.0d0
       if (one .lt. 1.0d0 + machpr) goto 10
       machpr = machpr*2.0d0
 c
@@ -92,10 +92,10 @@ c
          if (svals(i) .gt. 0) then
             k = i
          endif
-   20 continue
+ 20   continue
       if (k .ne. npsing) then
-	 info = 2
-    	 return
+         info = 2
+         return
       endif
       if (job .ne. 0 .and. (lamlim(1) .gt. lamlim(2))) then
          info = 3
@@ -123,12 +123,12 @@ c			lambda = 0
          do 30 i=npsing,1,-1
 c           w=w+(z(i)*svals(npsing)**2/(svals(i)**2))**2
             w=w+(z(i)*(svals(npsing)/svals(i))**2)**2
-   30    continue
+ 30      continue
          auxtbl(2,2)=nobs*w
          w=0.0d0
          do 40 i=npsing,1,-1
             w=w+(svals(npsing)/svals(i))**2
-   40    continue
+ 40      continue
          auxtbl(2,2)=auxtbl(2,2)/(w**2)
       endif
 c			lambda = infinity

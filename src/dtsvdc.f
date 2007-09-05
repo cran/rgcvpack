@@ -67,12 +67,12 @@ c                       calculate trace of x' x
       trxpx = 0.0d0
       do 10 j = 1,p
          trxpx = trxpx+ddot(n,x(1,j),1,x(1,j),1)
-   10 continue
+ 10   continue
       mintr = trxpx * minrat
 c                       qr decomposition of x
       do 20 j = 1,p
          iwork(j) = 0
-   20 continue
+ 20   continue
       call dqrdc(x,ldx,n,p,work,iwork,work(pp1),1)
 c                       calculate ratios for the truncated matrix
       accum = 0.0d0
@@ -80,10 +80,10 @@ c                       calculate ratios for the truncated matrix
       do 30 i = p,1,-1
          accum = accum+ddot(pp1-i,x(i,i),ldx,x(i,i),ldx)
          if (accum .lt. mintr) then
-	     k = i
-	     normk = accum
+            k = i
+            normk = accum
          endif
-   30 continue
+ 30   continue
       if (job/10.le.0) then
 c                       no left singular vectors
 c                       copy rk' (transpose of the first k rows of r
@@ -91,7 +91,7 @@ c			from qr decomposition) into x
          do 40 j = 1,k 
             call dcopy(p,x(j,1),ldx,x(1,j),1)
             call dset(j-1,0.0d0,x(1,j),1)
-   40    continue
+ 40      continue
 c                       svd of rk'
          sjob = 0
          if (mod(job,10).ne.0) sjob = 20
@@ -100,7 +100,7 @@ c                       svd of rk'
          if (mod(job,10).ne.0) then
             do 50 j = 1,k
                call dprmut(v(1,j),p,iwork,1)
-   50       continue
+ 50         continue
          endif
       else
 c                       u or u1 is to be created
@@ -110,7 +110,7 @@ c                       copy rk' to work
             i = i+p
             call dcopy(p,x(j,1),ldx,work(i),1)
             call dset(j-1,0.0d0,work(i),1)
-   60    continue
+ 60      continue
 c                       create u2 if requested
          if (job/10.eq.1) then
             nmk = n-k
@@ -121,7 +121,7 @@ c                       create u2 if requested
                call dqrsl(x,ldx,n,min(j,p),work,work(pp1),work(pp1),
      *          dummy,dummy,dummy,dummy,10000,locinf)
                call dcopy(n,work(pp1),1,u(1,j),1)
-   70       continue
+ 70         continue
          endif
          do 80 j = 1,k 
             jj = k+1-j
@@ -131,7 +131,7 @@ c                       create u2 if requested
             call dqrsl(x,ldx,n,jj,work,work(pp1),work(pp1),dummy,dummy,
      *       dummy,dummy,10000,locinf)
             call dcopy(n,work(pp1),1,u(1,jj),1)
-   80    continue
+ 80      continue
 c			  svd of rk'
          sjob = 1
          if (mod(job,10).ne.0) then
@@ -146,13 +146,13 @@ c			  svd of rk'
             do 90 j = 1,k 
                jj = jj+p
                u(i,j) = ddot(k,work,1,work(jj),1)
-   90       continue
-  100    continue
+ 90         continue
+ 100     continue
          if (mod(job,10).ne.0) then
 c		 undo pivots on right singular vectors
             do 110 j = 1,k
                call dprmut(v(1,j),p,iwork,1)
-  110       continue
+ 110        continue
          endif
       endif
       end

@@ -61,7 +61,7 @@ c			make [tu:su1] and ku
       call dmaketg(m,nuobs,dim,des,lddes,su1,ldsu1,ncov1,npoly,tusu1,
      * ldtu,iwork,info)
       if (info .ne. 0) then
-	 return
+         return
       endif
       call dmakekg(m,nuobs,dim,des,lddes,nuobs,des,lddes,ku,ldku)
       if (c1(1) .ne. 0) then

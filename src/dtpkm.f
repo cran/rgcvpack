@@ -126,7 +126,7 @@ c
 c $Header: dtpkm.f,v 2.100.1.2 04/05/22 09:24:39 Xianhong Exp $    
 c
       
-      integer nnull,ptb,pqr,pk,pt0,px,pkb,psigma,llwa,iinfo
+      integer nnull,ptb,pqr,pk,pt0,px,pkb,psigma,pwk,llwa,iinfo
       double precision dummy
       
 c     

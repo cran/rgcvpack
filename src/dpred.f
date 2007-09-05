@@ -63,17 +63,17 @@ c
 c
       nct = mkpoly(m,dim) 
       if ((ndesb .le. 0) .or. (nct .le. 0) .or. (m .le. 0) .or. 
-     * (dim .le. 0) .or. 2*m - dim .le. 0) then
-	 info = 1
-	 return
+     *     (dim .le. 0) .or. 2*m - dim .le. 0) then
+         info = 1
+         return
       endif
       if (npar .ne. ndesb + nct + ncov1 + ncov2) then
          info = 2
          return
       endif
       if (lwa .lt. npred*(nct+ndesb)) then
-	 info = 3
-	 return
+         info = 3
+         return
       endif
 c			first npred*nct positions of work contain t
       p1 = npred*nct

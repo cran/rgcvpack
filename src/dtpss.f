@@ -252,7 +252,7 @@ c			vector,	the predicted values, and diagonal of A
       if (nuobs .ne. nobs) then
          do 10 i = 1,nuobs
             coef(ncts+i) = coef(ncts+i) * work(i)
-   10    continue
+ 10      continue
          j = nuobs
          do 20 i = nobs,1,-1 
             y(i)=y(j)/work(j)
@@ -262,7 +262,7 @@ c			vector,	the predicted values, and diagonal of A
             if (iwork(ip1 + i) .eq. 0) then
                j = j - 1
             endif
-   20    continue
+ 20      continue
       endif
 c			undo the permutation of the predicted values and
 c			adiag if necessary

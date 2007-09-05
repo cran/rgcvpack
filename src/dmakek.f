@@ -59,9 +59,9 @@ c			compute gamma(dim/2 - m)
          j = (1 - (dim-2*m)) / 2
          theta = sqrt(pi)
          do 40 i=1,j
-	      theta = -theta / (i - 0.5d0)
+            theta = -theta / (i - 0.5d0)
    40    continue
-	 theta = theta / t
+         theta = theta / t
 
          do 70 i=1,n 
             do 60 j=1,nb 

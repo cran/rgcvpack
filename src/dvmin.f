@@ -46,38 +46,39 @@ c
       integer j,jmin,k
       double precision dvl
 c				null interval
+      jmin = 0
       if (lower .eq. upper) then
-	 dvmin = lower
-	 info = -1
-	 vlamht = dvl(lower,svals,z,npsing,cost)
-	 do 10 j = 1, ntbl
-	    tbl(j,1) = lower
-	    tbl(j,2) = vlamht
-   10    continue
-	 return
+         dvmin = lower
+         info = -1
+         vlamht = dvl(lower,svals,z,npsing,cost)
+         do 10 j = 1, ntbl
+            tbl(j,1) = lower
+            tbl(j,2) = vlamht
+ 10      continue
+         return
       end if
-c				non-null interval
+c                 non-null interval
       info = 0
       a = lower
       b = upper
       if (ntbl .eq. 1) then
-	 x = (a + b)/2
-	 tbl(1,1) = x
-	 tbl(1,2) = dvl(x,svals,z,npsing,cost)
+         x = (a + b)/2
+         tbl(1,1) = x
+         tbl(1,2) = dvl(x,svals,z,npsing,cost)
       else if (ntbl .ge. 2) then
 c			do grid search
-	 v=dvl(lower,svals,z,npsing,cost)*2.0d0
-	 del=(upper-lower)/(ntbl-1)
-	 do 20 j = 1, ntbl
-	    tbl(j,1) = lower + (j - 1) * del
-	    tbl(j,2) = dvl(tbl(j,1),svals,z,npsing,cost)
-	    if (tbl(j,2) .le. v) then
-	       jmin = j
-	       v = tbl(j,2)
-	    endif
-   20    continue	      
-	 a=tbl(jmin,1)-del
-	 b=tbl(jmin,1)+del
+         v=dvl(lower,svals,z,npsing,cost)*2.0d0
+         del=(upper-lower)/(ntbl-1)
+         do 20 j = 1, ntbl
+            tbl(j,1) = lower + (j - 1) * del
+            tbl(j,2) = dvl(tbl(j,1),svals,z,npsing,cost)
+            if (tbl(j,2) .le. v) then
+               jmin = j
+               v = tbl(j,2)
+            endif
+ 20      continue
+         a=tbl(jmin,1)-del
+         b=tbl(jmin,1)+del
       end if
 c			do golden ratio search			
       k1=(3.0d0-dsqrt(5.0d0))/2.0d0
@@ -87,20 +88,20 @@ c			do golden ratio search
       vc = dvl(c,svals,z,npsing,cost)
       vd = dvl(d,svals,z,npsing,cost)
       do 30 k=1,50
-	 if (vd .lt. vc) then
-	    a = c
-	    c = d
-	    d = a + k2*(b - a)
-	    vc = vd
-	    vd = dvl(d,svals,z,npsing,cost)
-	 else
-	    b = d
-	    d = c
-	    c = a + k1*(b - a)
-	    vd = vc
-	    vc = dvl(c,svals,z,npsing,cost)
-	 end if
-   30 continue
+         if (vd .lt. vc) then
+            a = c
+            c = d
+            d = a + k2*(b - a)
+            vc = vd
+            vd = dvl(d,svals,z,npsing,cost)
+         else
+            b = d
+            d = c
+            c = a + k1*(b - a)
+            vd = vc
+            vc = dvl(c,svals,z,npsing,cost)
+         end if
+ 30   continue
       x=(a+b)/2
       if (x .le. lower) info = -1
       if (x .ge. upper) info = -2

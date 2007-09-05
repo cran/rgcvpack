@@ -49,98 +49,98 @@ c
       info = 0
       one = 1.0d0
       machpr = 1.0d0
-   10 machpr = machpr/2.0d0
+ 10   machpr = machpr/2.0d0
       if (one .lt. 1.0d0 + machpr) goto 10
       machpr = machpr*2.0d0
 c
       do 20 i = 1,nobs
-          order(i) = i
- 	  xrep(i) = 0
-   20 continue
+         order(i) = i
+         xrep(i) = 0
+ 20   continue
       if (job .ne. 0) call dset(nobs,0.0d0,c1,1)
 c			sort des and s 
       sw = nobs - 1
-   30 if (sw .le. 0) goto 90 
-          oldsw = sw
-          sw = 0
-          do 80 i = 1,oldsw 
-	      cont = 1
-	      k = 1
-   40         if (cont .eq. 0) goto 70
-                  if (k .le. dim) then
-	              diff = des(i,k) - des(i+1,k)
-                  else
-	              diff = s(i,k-dim) - s(i+1,k-dim)
-                  endif
-		  if (diff .lt. 0.0d0) then
-		      if (k .gt. dim) info = 1
-		      cont = 0
-		  else if (diff .gt. 0.0d0) then
-		      if (k .gt. dim) info = 1
-c		      switch the order of i and i+1
-		      itemp = order(i)
-		      order(i)=order(i+1)
-		      order(i+1) = itemp
-		      itemp = xrep(i)
-		      xrep(i)= xrep(i+1)
-		      xrep(i+1)= itemp
-		      do 50 j = 1,dim
-			  temp = des(i,j)
-			  des(i,j) = des(i+1,j)
-			  des(i+1,j) = temp
-   50 		      continue
-  		      do 60 j = 1,ncov1+ncov2
-			  temp = s(i,j)
-			  s(i,j) = s(i+1,j)
-			  s(i+1,j) = temp
-   60 		      continue
-		      sw = i
-		      cont = 0
-                  else if (k .eq. dim + ncov1) then
-		      xrep(i + 1) = 1
-		      cont = 0
-                  else 
-	    	      k = k + 1
-                  endif
-              goto 40
-   70         continue
-   80     continue
+ 30   if (sw .le. 0) goto 90 
+      oldsw = sw
+      sw = 0
+      do 80 i = 1,oldsw 
+         cont = 1
+         k = 1
+ 40      if (cont .eq. 0) goto 70
+         if (k .le. dim) then
+            diff = des(i,k) - des(i+1,k)
+         else
+            diff = s(i,k-dim) - s(i+1,k-dim)
+         endif
+         if (diff .lt. 0.0d0) then
+            if (k .gt. dim) info = 1
+            cont = 0
+         else if (diff .gt. 0.0d0) then
+            if (k .gt. dim) info = 1
+c                      switch the order of i and i+1
+            itemp = order(i)
+            order(i)=order(i+1)
+            order(i+1) = itemp
+            itemp = xrep(i)
+            xrep(i)= xrep(i+1)
+            xrep(i+1)= itemp
+            do 50 j = 1,dim
+               temp = des(i,j)
+               des(i,j) = des(i+1,j)
+               des(i+1,j) = temp
+ 50         continue
+            do 60 j = 1,ncov1+ncov2
+               temp = s(i,j)
+               s(i,j) = s(i+1,j)
+               s(i+1,j) = temp
+ 60         continue
+            sw = i
+            cont = 0
+         else if (k .eq. dim + ncov1) then
+            xrep(i + 1) = 1
+            cont = 0
+         else 
+            k = k + 1
+         endif
+         goto 40
+ 70      continue
+ 80   continue
       goto 30
-   90 continue
+ 90   continue
 c			compute range of design
       denom=0.0d0
       do 120 j=1,dim
-          wmin = des(1,j)
-	  wmax = des(1,j)
-          do 110 i=1,nobs
-	      if (des(i,j) .lt. wmin) wmin = des(i,j)
-	      if (des(i,j) .gt. wmax) wmax = des(i,j)
-  110     continue
-	  denom = denom + (wmax-wmin)**2
-  120 continue
-	    
+         wmin = des(1,j)
+         wmax = des(1,j)
+         do 110 i=1,nobs
+            if (des(i,j) .lt. wmin) wmin = des(i,j)
+            if (des(i,j) .gt. wmax) wmax = des(i,j)
+ 110     continue
+         denom = denom + (wmax-wmin)**2
+ 120  continue
+      
 c			check for design points too close together
       do 140 i=1,nobs-1
-	  if (xrep(i+1) .eq. 0) then
-	     diff = 0.0d0
-	     do 130 j=1,dim
-	        diff = diff + (des(i,j)-des(i+1,j))**2
-  130	     continue
-	     if (abs(diff)/denom .lt. 100*machpr) xrep(i+1)=1
-	  endif 
-  140 continue
+         if (xrep(i+1) .eq. 0) then
+            diff = 0.0d0
+            do 130 j=1,dim
+               diff = diff + (des(i,j)-des(i+1,j))**2
+ 130        continue
+            if (abs(diff)/denom .lt. 100*machpr) xrep(i+1)=1
+         endif 
+ 140  continue
 c			compute dfrep and c1
       dfrep = 0
       j = 0
-       do 150 i = 1,nobs
-	   j = j + 1 - xrep(i)
-	   if (job .ne. 0) c1(j) = xrep(i)*c1(j) + 1.0d0
-	   dfrep = dfrep + xrep(i)
-  150 continue
+      do 150 i = 1,nobs
+         j = j + 1 - xrep(i)
+         if (job .ne. 0) c1(j) = xrep(i)*c1(j) + 1.0d0
+         dfrep = dfrep + xrep(i)
+ 150  continue
       nuobs = nobs - dfrep
       if (job .eq. 0 ) return
       do 160 i = 1,nuobs
-	  c1(i) = sqrt(c1(i))
-  160 continue
+         c1(i) = sqrt(c1(i))
+ 160  continue
       return 
       end

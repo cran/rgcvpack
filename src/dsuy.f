@@ -36,42 +36,42 @@ c
 c			compute ssq for replication
       first = 0
       do 20 i = 1,nobs
-	  if (xrep(i) .eq. 1) then
-	      accum = accum + y(i)
-	  else if (first .eq. i - 1) then
-	      first = i
-	      accum = y(i)
-	  else
-	      accum = accum/(i-first)
-	      do 10 j = first,i-1
-	          ssqrep = (y(j)-accum)**2 + ssqrep
-   10         continue
-	      first = i
-	      accum = y(i)
-          endif
-   20 continue
+         if (xrep(i) .eq. 1) then
+            accum = accum + y(i)
+         else if (first .eq. i - 1) then
+            first = i
+            accum = y(i)
+         else
+            accum = accum/(i-first)
+            do 10 j = first,i-1
+               ssqrep = (y(j)-accum)**2 + ssqrep
+ 10         continue
+            first = i
+            accum = y(i)
+         endif
+ 20   continue
       if (xrep(nobs) .eq. 1) then
-          accum = accum/(nobs + 1 - first)
-          do 30 j = first,nobs
-              ssqrep = (y(j)-accum)**2 + ssqrep
-   30     continue
+         accum = accum/(nobs + 1 - first)
+         do 30 j = first,nobs
+            ssqrep = (y(j)-accum)**2 + ssqrep
+ 30      continue
       endif
 c			compute B1'y and B1'ytrue
       j = 0
       do 40 i = 1,nobs
- 	  if (xrep(i) .eq. 0) then
- 	      if (j .ne. 0) then
- 		  y(j) = y(j) / c1(j)
- 		  if (job .ne. 0) ytrue(j) = ytrue(j) / c1(j)
-              endif
- 	      j = j + 1
-	      y(j) = y(i)
-	      if (job .ne. 0) ytrue(j) = ytrue(i)
-	  else
-	      y(j) = y(j) + y(i)
-	      if (job .ne. 0) ytrue(j) = ytrue(j) + ytrue(i)
- 	  endif
-   40 continue
+         if (xrep(i) .eq. 0) then
+            if (j .ne. 0) then
+               y(j) = y(j) / c1(j)
+               if (job .ne. 0) ytrue(j) = ytrue(j) / c1(j)
+            endif
+            j = j + 1
+            y(j) = y(i)
+            if (job .ne. 0) ytrue(j) = ytrue(i)
+         else
+            y(j) = y(j) + y(i)
+            if (job .ne. 0) ytrue(j) = ytrue(j) + ytrue(i)
+         endif
+ 40   continue
       y(j) = y(j) / c1(j)
       if (job .ne. 0) ytrue(j) = ytrue(j) / c1(j)
       return 

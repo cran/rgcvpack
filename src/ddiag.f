@@ -49,7 +49,7 @@ c			form adiag
          call dqrsl(fg,ldfg,nobs,nnull,fgaux,work,dummy,work,dummy, 
      *    dummy,dummy,01000,locinf)
          adiag(i)=ddot(nnull,work,1,work,1)
-	 call dgemv('T',nmh,npsing,1.0d0,u,ldu,work(hp1),1,0.0d0,
+         call dgemv('T',nmh,npsing,1.0d0,u,ldu,work(hp1),1,0.0d0,
      *    work(np1),1)
          do 10 j=1,npsing
             work(nobs+j)=work(nobs+j)*svals(j)/dsqrt(svals(j)**2+nlamht)

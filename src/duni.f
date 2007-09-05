@@ -24,12 +24,12 @@ c
 c
       j = 0
       do  20 i = 1,nobs
- 	  if (xrep(i) .eq. 0) then
- 	      j = j + 1
- 	      do 10 k = 1,ncx
- 	          xu(j,k) = x(i,k)
-   10         continue
- 	  endif
-   20 continue
+         if (xrep(i) .eq. 0) then
+            j = j + 1
+            do 10 k = 1,ncx
+               xu(j,k) = x(i,k)
+ 10         continue
+         endif
+ 20   continue
       return 
       end

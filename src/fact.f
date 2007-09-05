@@ -16,7 +16,7 @@ c
       if (i .ge. 0) fact = 1
       if (i .le. 1) return
       do 10 j = 2,i
-	 fact = fact*j
-   10	continue
+         fact = fact*j
+ 10   continue
       return
       end

@@ -76,7 +76,7 @@ c
 c
       one = 1.0d0
       machpr = 1.0d0
-   10 machpr = machpr/2.0d0
+ 10   machpr = machpr/2.0d0
       if (one .lt. 1.0d0 + machpr) goto 10
       machpr = machpr*2.0d0
       minrat = machpr*tau
@@ -87,8 +87,8 @@ c			check dimensions
          return
       endif
       if (tau .lt. 0) then
-	 info = 2
-	 return
+         info = 2
+         return
       endif
 c			z1 is the first pmh columns of x
 c			z2 is next h columns
@@ -102,7 +102,7 @@ c			create j as f' z1
       do 30 j = 1,pmh
          call dqrsl (x(1,pmhp1),ldx,nobs,nnull,fgaux,x(1,j),dummy,
      *    x(1,j),dummy,dummy,dummy,01000,locinf)
-   30 continue
+ 30   continue
 c			decompose j2 (last npar - nnull rows of j)
 c			as udv'
       if (pmh .gt. nmh) then
@@ -113,51 +113,51 @@ c			transpose the j2 matrix
          endif
          do 40 i = 0, nmh-1
             call dcopy(pmh,x(hp1+i,1),ldx,work(i*pmh),1)
-   40    continue
+ 40      continue
          do 50 i = 0, nmh-1
             call dcopy (pmh, work(i*pmh),1,x(hp1,i+1),1)
-   50    continue
+ 50      continue
          if (job .ne. 0) then
             call dtsvdc (x(hp1,1),ldx,pmh,nmh,minrat,npsing,svals,
      *       x(hp1,1),ldx,v,ldv,normk,work,lwa,iwork,liwa,21,info)
             if (info .ne. 0) then
-	       npsing = info
+               npsing = info
                info = 4
-	       return
+               return
             endif
          else
             call dsvdc (x(hp1,1),ldx,pmh,nmh,svals,work(pmhp1),x(hp1,1),
      *       ldx,v,ldv,work,21,info)
             if (info .ne. 0) then
-	       npsing = info
+               npsing = info
                info = 5
-	       return
+               return
             endif
             npsing=nmh
-	    normk=0.0d0
+            normk=0.0d0
          endif
          do 60 i = 1, npsing
             call dswap(pmh,x(hp1,i),1,v(1,i),1)
-   60    continue
+ 60      continue
       else
          if (job .ne. 0) then
             call dtsvdc (x(hp1,1),ldx,nmh,pmh,minrat,npsing,svals,
      *       x(hp1,1),ldx,v,ldv,normk,work,lwa,iwork,liwa,21,info)
             if (info .ne. 0) then
-	       npsing = info
+               npsing = info
                info = 6
-	       return
+               return
             endif
          else
             call dsvdc (x(hp1,1),ldx,nmh,pmh,svals,work(nmh+1),x(hp1,1),
      *       ldx,v,ldv,work,21,info)
             if (info .ne. 0) then
-	       npsing = info
+               npsing = info
                info = 7
-	       return
+               return
             endif
             npsing=pmh
-	    normk = 0.0d0
+            normk=0.0d0
          endif
       endif
       return

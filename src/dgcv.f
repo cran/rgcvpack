@@ -180,7 +180,7 @@ c			calculate predicted values
      * npsing,x(mp1,1),ldx,nlamht,y,y(mp1),y,work)
       if (jadiag .ne. 0) then
           call ddiag (x(1,pmhp1),ldx,nobs,nnull,dcaux(pmhp1),
-     * 	  dcaux(pp1),npsing,x(mp1,1),ldx,nlamht,adiag,work)
+     *        dcaux(pp1),npsing,x(mp1,1),ldx,nlamht,adiag,work)
       endif
       if (sinfo .lt. 0) info = sinfo
       return

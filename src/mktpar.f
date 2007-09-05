@@ -24,7 +24,7 @@ c				2 - bign <= 1 or nobs <= 1
 c				3 - bign not even 
 c  $Header: mktpar.f,v 2.100.1.2 86/10/13 14:09:36 lindstrom Exp $ 
       double precision rt2pi,twopi,sn,cs,fo,f00,ko,k00,fdiff,
-     *	iovern
+     *     iovern
       integer j,i
 c     
       twopi = 8.0d0 * atan(1.0d0)
@@ -39,23 +39,23 @@ c
       fdiff = f00(0.0d+0,testno,rt2pi) - f00(1.0d+0,testno,rt2pi)
       call dset(4*(bign/2+1),0.0d0,tpar,1)
       do 20 j = 0, bign/2 
-	  do 10 i = 1,bign
-	      iovern = dble(i)/dble(bign)
-	      sn = sin(twopi*j*iovern)
-	      cs = cos(twopi*j*iovern)
- 	      fo = f00(iovern,testno,rt2pi)+( iovern-0.5)*fdiff
-	      tpar(1,j+1)= tpar(1,j+1)+cs*fo
-	      tpar(2,j+1)= tpar(2,j+1)+sn*fo
-	      ko = k00(iovern,bandwd,rt2pi)
-	      tpar(3,j+1)= tpar(3,j+1)+cs*ko
-	      tpar(4,j+1)= tpar(4,j+1)+sn*ko
-   10     continue
-   20 continue
+         do 10 i = 1,bign
+            iovern = dble(i)/dble(bign)
+            sn = sin(twopi*j*iovern)
+            cs = cos(twopi*j*iovern)
+            fo = f00(iovern,testno,rt2pi)+( iovern-0.5)*fdiff
+            tpar(1,j+1)= tpar(1,j+1)+cs*fo
+            tpar(2,j+1)= tpar(2,j+1)+sn*fo
+            ko = k00(iovern,bandwd,rt2pi)
+            tpar(3,j+1)= tpar(3,j+1)+cs*ko
+            tpar(4,j+1)= tpar(4,j+1)+sn*ko
+ 10      continue
+ 20   continue
       call dscal(4*(bign/2+1),1.0d0/dble(bign),tpar,1)
       do 30 j = 1,nobs
-          f0(j) = f00(t(j),testno,rt2pi)+(t(j)-0.5)*fdiff
-          k0(j) = k00(t(j),bandwd,rt2pi)
-   30 continue
+         f0(j) = f00(t(j),testno,rt2pi)+(t(j)-0.5)*fdiff
+         k0(j) = k00(t(j),bandwd,rt2pi)
+ 30   continue
       return
       end
 c

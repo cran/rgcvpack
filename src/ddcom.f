@@ -118,9 +118,9 @@ c			decompose sigma
          return
       endif
       if (info .lt. 0) then
-	  sinfo = info
-	  pmh = npar - nnull
-          pmhp1 = pmh + 1
+         sinfo = info
+         pmh = npar - nnull
+         pmhp1 = pmh + 1
       endif
 c			create z
       call dcrtz(x,ldx,nobs,npar,pmh,sigma,ldsigm,dcaux,sgpvt,work,info)

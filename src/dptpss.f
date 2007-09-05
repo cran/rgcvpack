@@ -231,28 +231,28 @@ c
       lwa2 = lwa - ( ncts1*(nobs+nuobs+1) + snnpar*(nobs+snnpar))
 c			make [t:s1] and k
       if (m .ne. 1) then
-          call dmaketg(m,nobs,dim,des,lddes,s,lds,ncov1,npoly,work,nobs,
+         call dmaketg(m,nobs,dim,des,lddes,s,lds,ncov1,npoly,work,nobs,
      *     iwork(ip2p1),info)
-          if (info .ne. 0) then
-             info = 5
-             return
-          endif
-c			put unique rows of des into des
-          call duni(des,lddes,nobs,dim,iwork(ip1p1),des,lddes)
+         if (info .ne. 0) then
+            info = 5
+            return
+         endif
+c           put unique rows of des into des
+         call duni(des,lddes,nobs,dim,iwork(ip1p1),des,lddes)
 c			put k into x
-          call dmakekg(m,nobs,dim,work(1+nobs),nobs,nuobs,des,lddes,
+         call dmakekg(m,nobs,dim,work(1+nobs),nobs,nuobs,des,lddes,
      *     work(p2p1),ldx)
       else
 c			put unique rows of des in 1st nuobs 
 c			positions of work
-          call duni(des,lddes,nobs,dim,iwork(ip1p1),work,1)
+         call duni(des,lddes,nobs,dim,iwork(ip1p1),work,1)
 c			put k into x
-          call dmakekg(m,nobs,dim,work,nobs,nuobs,des,lddes,
+         call dmakekg(m,nobs,dim,work,nobs,nuobs,des,lddes,
      *     work(p2p1),ldx)
 c			copy unique rows of des from work to des 
-          call dcopy(nuobs,work,1,des,1)
+         call dcopy(nuobs,work,1,des,1)
 c			set t = 1
-	  call dset(nobs,1.0d0,work,1)
+         call dset(nobs,1.0d0,work,1)
       endif
 c			put unique rows of k into (ncov2+1,ncov2+1)
 c			position of sigma
@@ -271,12 +271,12 @@ c
       iout(3) = nnull
       iout(1) = iout2(1)
       if (info .eq. -3) then
-	  info = 6
-	  return
+         info = 6
+         return
       endif
       if (info .gt. 0) then
-	 info = info + 1000
-	 return
+         info = info + 1000
+         return
       endif
       if (info .lt. 0) sinfo = info
 c			form psi = f2 zeta
