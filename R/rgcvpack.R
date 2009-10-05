@@ -181,7 +181,7 @@ fitTps <- function(x, y, m=2, knots=NULL, scale.type="range", method="v",
     gcv <- tpss.lst$auxtbl[4]
     gcv.grid <- as.data.frame(matrix(tpss.lst$tbl, nstep.cv, 3))
     names(gcv.grid) <- c("loglam", "fGCV", "PMSE")
-    gcv.grid$GCV[gcv.grid$GCV==1e+20] <- NA
+    gcv.grid$fGCV[gcv.grid$fGCV==1e+20] <- NA
     object <- list(x=x, y=y, m=m, knots=knots, scale.type=scale.type,
                    method=method, lambda=lamhat, cost=cost, nstep.cv=nstep.cv,
                    tau=tau, df=df, gcv=gcv, xs=xs, ks=ks, c=coefc, d=coefd,
