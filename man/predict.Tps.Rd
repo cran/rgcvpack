@@ -5,7 +5,7 @@
   Predict the thin plate spline fitting at given new data points.
 }
 \usage{
-  predict.Tps(object, newdata = NULL, ...)
+  \method{predict}{Tps}(object, newdata = NULL, ...)
 }
 \arguments{
   \item{object}{a Tps object returned by fitTps }
